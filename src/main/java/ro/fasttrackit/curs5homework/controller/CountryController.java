@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.*;
 import ro.fasttrackit.curs5homework.domain.Country;
 import ro.fasttrackit.curs5homework.service.CountryService;
 
+import java.net.http.HttpHeaders;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +23,7 @@ public class CountryController {
         return countryService.getCountries(includeNeighbour, excludeNeighbour);
     }
 
-    @GetMapping("/names")
+    @GetMapping("names")
     public List<String> getAllCountryNames() {
         return countryService.getAllCountryNames();
     }
@@ -45,5 +46,10 @@ public class CountryController {
     @GetMapping("population")
     public Map<String, Long> getCountryNamesMappedToPopulation() {
         return countryService.mapCountryNamesToPopulations();
+    }
+
+    @GetMapping("mine")
+    public Country getMyCountry(@RequestHeader(value = "X-Country", defaultValue = "Romania") String countryName) {
+        return countryService.getMyCountry(countryName);
     }
 }

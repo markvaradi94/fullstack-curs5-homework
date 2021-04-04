@@ -11,10 +11,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "countries")
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode
-@ToString
+@Data
 @Validated
 public class Country {
 

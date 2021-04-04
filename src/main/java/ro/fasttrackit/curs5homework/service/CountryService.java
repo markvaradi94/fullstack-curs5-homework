@@ -1,10 +1,14 @@
 package ro.fasttrackit.curs5homework.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.annotation.RequestScope;
 import ro.fasttrackit.curs5homework.domain.Country;
 import ro.fasttrackit.curs5homework.reader.CountryReader;
 import ro.fasttrackit.curs5homework.repository.CountryRepository;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -96,6 +100,13 @@ public class CountryService {
                         TreeMap::new,
                         toUnmodifiableList()
                 ));
+    }
+
+    public Country getMyCountry(String countryName) {
+        return getAllCountries().stream()
+                .filter(country -> country.getName().equalsIgnoreCase(countryName))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Couldn't find country with name:  " + countryName));
     }
 
     private boolean isNeighbouredByIncludedButNotByExcluded(String includeNeighbour, String excludeNeighbour, Country country) {
